@@ -1,9 +1,13 @@
-require('./db/connect')
+
 const express = require("express");
 const app = express();
 const tasks = require("./routes/tasks");
-const dotenv = require('dotenv');
-dotenv.config();
+const mongoose = require("mongoose");
+// const dotenv = require('dotenv');  // can do it this way
+// dotenv.config();
+require('dotenv').config()  // can do it this way too
+
+const connectDB = require('./db/connect')
 
 //middleware
 app.use(express.json());
@@ -24,5 +28,16 @@ app.use("/api/v1/tasks", tasks);
 
 const port = process.env.PORT;
 const host = process.env.HOST;
+const URL = process.env.MONGO_URL
 
-app.listen(port, console.log(`server is listening on ${host}:${port}...`));
+const start = async () => {
+  try {
+    await connectDB(URL).then(console.log('CONNECTED TO THE DB...'))    
+    app.listen(port, console.log(`server is listening on ${host}:${port}...`));
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+start()
+
