@@ -10,13 +10,14 @@ require('dotenv').config()  // can do it this way too
 const connectDB = require('./db/connect')
 
 //middleware
+app.use(express.static('./public'))
 app.use(express.json());
 
 
 //routes
-app.get("/hello", (req, res) => {
-  res.send("Task Manager App");
-});
+// app.get("/hello", (req, res) => {
+//   res.send("Task Manager App");
+// });
 
 app.use("/api/v1/tasks", tasks);
 
