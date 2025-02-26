@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 require('dotenv').config()  // can do it this way too
 
 const connectDB = require('./db/connect')
+const notFound = require('./middleware/not-found')
 
 //middleware
 app.use(express.static('./public'))
@@ -20,6 +21,8 @@ app.use(express.json());
 // });
 
 app.use("/api/v1/tasks", tasks);
+//last in routes
+app.use(notFound)
 
 // app.get('/api/v1/tasks')        - get all the tasks
 // app.post('/api/v1/tasks')       - create a new task
